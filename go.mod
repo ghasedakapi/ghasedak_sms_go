@@ -1,3 +1,3 @@
-module github.com/ghasedakapi/ghasedak_sms_go
+module main
 
-go 1.18
+go 1.22.4
