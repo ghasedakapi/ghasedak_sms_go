@@ -5,11 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-
-	// "io/ioutil"
 	"net/http"
-
-	"github.com/ghasedakapi/ghasedak_sms_go/helper" // update with the actual import path
+	// "github.com/ghasedakapi/ghasedak_sms_go/helper" // update with the actual import path
 )
 
 type Ghasedak struct {
@@ -51,7 +48,7 @@ func (g *Ghasedak) CheckSmsStatus(query map[string]interface{}) (string, error) 
 		"Type": fmt.Sprint(query["type"]),
 	}
 	ids := query["ids"].([]string)
-	queryString := helper.BuildQueryString(g.url+"CheckSmsStatus", params, "Ids", ids)
+	queryString := BuildQueryString(g.url+"CheckSmsStatus", params, "Ids", ids)
 	response, err := g.request("GET", queryString, nil)
 	if err != nil {
 		return "", err
@@ -72,7 +69,7 @@ func (g *Ghasedak) GetReceivedSmses(query map[string]interface{}) (string, error
 		"LineNumber": query["line_number"].(string),
 		"IsRead":     fmt.Sprint(query["is_read"]),
 	}
-	queryString := helper.BuildQueryString(g.url+"GetReceivedSmses", params, "", nil)
+	queryString := BuildQueryString(g.url+"GetReceivedSmses", params, "", nil)
 	response, err := g.request("GET", queryString, nil)
 	if err != nil {
 		return "", err
@@ -87,7 +84,7 @@ func (g *Ghasedak) GetReceivedSmsesPaging(query map[string]interface{}) (string,
 		"PageSize":   fmt.Sprint(query["page_size"]),
 		"PageNumber": fmt.Sprint(query["page_number"]),
 	}
-	queryString := helper.BuildQueryString(g.url+"GetReceivedSmsesPaging", params, "", nil)
+	queryString := BuildQueryString(g.url+"GetReceivedSmsesPaging", params, "", nil)
 	response, err := g.request("GET", queryString, nil)
 	if err != nil {
 		return "", err
