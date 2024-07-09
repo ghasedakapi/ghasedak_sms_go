@@ -1,10 +1,13 @@
-// package ghasedak
+package ghasedak
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+
+	// "io/ioutil"
 	"net/http"
-	"bytes"
 
 	"github.com/ghasedakapi/ghasedak_sms_go/helper" // update with the actual import path
 )
