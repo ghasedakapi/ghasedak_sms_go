@@ -8,7 +8,7 @@ import (
 func main() {
 
 	apikey := "b7ee4eacexxxxxxxxxxxxxxxxxxxxx"
-	line := "1234xxxxx"
+	linenumber := "1234xxxxxxx"
 	receptor := "09xxxxxxxxx"
 	client := NewGhasedak(apikey)
 
@@ -34,7 +34,7 @@ func main() {
 
 	// GetReceivedSmses
 	getReceivedSmsesQuery := map[string]interface{}{
-		"line_number": line,
+		"line_number": linenumber,
 		"is_read":     false,
 	}
 	fmt.Printf("GetReceivedSmses Input: %v\n", getReceivedSmsesQuery)
@@ -46,7 +46,7 @@ func main() {
 
 	//GetReceivedSmsesPaging
 	getReceivedSmsesPagingQuery := map[string]interface{}{
-		"line_number": line,
+		"line_number": linenumber,
 		"is_read":     false,
 		"page_size":   10,
 		"page_number": 1,
@@ -72,7 +72,7 @@ func main() {
 		//"sendDate":          time.Now().Format(time.RFC3339),
 		"message":    "Hello World!",
 		"receptor":   receptor,
-		"linenumber": line,
+		"linenumber": linenumber,
 		//"clientReferenceId": "stringfsdfsdf",
 		//"udh":               false,
 	}
@@ -87,7 +87,7 @@ func main() {
 	sendBulkSmsCommand := map[string]interface{}{
 		"message":    "Hello Everyone!",
 		"receptors":  []string{receptor, receptor},
-		"linenumber": line,
+		"linenumber": linenumber,
 	}
 	fmt.Printf("SendBulkSms Input: %v\n", sendBulkSmsCommand)
 	sendBulkSmsOutput, err := client.SendBulkSms(sendBulkSmsCommand)
@@ -99,14 +99,14 @@ func main() {
 	sendPairToPairSmsCommand := map[string]interface{}{
 		"items": []map[string]interface{}{
 			{
-				"lineNumber": line,
+				"lineNumber": linenumber,
 				"receptor":   receptor,
 				"message":    "string",
 				//"clientReferenceId": "sdsdfdsftrifdfdng",
 				//"sendDate":         time.Now().Format(time.RFC3339),
 			},
 			{
-				"lineNumber": line,
+				"lineNumber": linenumber,
 				"receptor":   receptor,
 				"message":    "string3",
 				//"clientReferenceId": "sdsfdsfsddfddfdsftring",
