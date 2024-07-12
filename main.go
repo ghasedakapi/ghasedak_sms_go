@@ -1,4 +1,4 @@
-package ghasedak
+package main
 
 import (
 	"bytes"
@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	// "github.com/ghasedakapi/ghasedak_sms_go/helper" // update with the actual import path
 )
 
 type Ghasedak struct {
@@ -25,10 +24,10 @@ func NewGhasedak(apiKey string) *Ghasedak {
 		},
 	}
 }
-
 func (g *Ghasedak) request(method, endpoint string, body []byte) ([]byte, error) {
 	client := &http.Client{}
 	req, err := http.NewRequest(method, g.url+endpoint, bytes.NewBuffer(body))
+
 	if err != nil {
 		return nil, err
 	}
@@ -48,14 +47,13 @@ func (g *Ghasedak) CheckSmsStatus(query map[string]interface{}) (string, error) 
 		"Type": fmt.Sprint(query["type"]),
 	}
 	ids := query["ids"].([]string)
-	queryString := BuildQueryString(g.url+"CheckSmsStatus", params, "Ids", ids)
+	queryString := BuildQueryString("CheckSmsStatus", params, "Ids", ids)
 	response, err := g.request("GET", queryString, nil)
 	if err != nil {
 		return "", err
 	}
 	return string(response), nil
 }
-
 func (g *Ghasedak) GetAccountInformation() (string, error) {
 	response, err := g.request("GET", "GetAccountInformation", nil)
 	if err != nil {
@@ -63,20 +61,18 @@ func (g *Ghasedak) GetAccountInformation() (string, error) {
 	}
 	return string(response), nil
 }
-
 func (g *Ghasedak) GetReceivedSmses(query map[string]interface{}) (string, error) {
 	params := map[string]string{
 		"LineNumber": query["line_number"].(string),
 		"IsRead":     fmt.Sprint(query["is_read"]),
 	}
-	queryString := BuildQueryString(g.url+"GetReceivedSmses", params, "", nil)
+	queryString := BuildQueryString("GetReceivedSmses", params, "", nil)
 	response, err := g.request("GET", queryString, nil)
 	if err != nil {
 		return "", err
 	}
 	return string(response), nil
 }
-
 func (g *Ghasedak) GetReceivedSmsesPaging(query map[string]interface{}) (string, error) {
 	params := map[string]string{
 		"LineNumber": query["line_number"].(string),
@@ -84,23 +80,21 @@ func (g *Ghasedak) GetReceivedSmsesPaging(query map[string]interface{}) (string,
 		"PageSize":   fmt.Sprint(query["page_size"]),
 		"PageNumber": fmt.Sprint(query["page_number"]),
 	}
-	queryString := BuildQueryString(g.url+"GetReceivedSmsesPaging", params, "", nil)
+	queryString := BuildQueryString("GetReceivedSmsesPaging", params, "", nil)
 	response, err := g.request("GET", queryString, nil)
 	if err != nil {
 		return "", err
 	}
 	return string(response), nil
 }
-
 func (g *Ghasedak) GetOtpTemplateParameters(templateName string) (string, error) {
-	queryString := fmt.Sprintf("%sGetOtpTemplateParameters?TemplateName=%s", g.url, templateName)
+	queryString := fmt.Sprintf("%sGetOtpTemplateParameters?TemplateName=%s", "", templateName)
 	response, err := g.request("GET", queryString, nil)
 	if err != nil {
 		return "", err
 	}
 	return string(response), nil
 }
-
 func (g *Ghasedak) SendSimpleSms(command interface{}) (string, error) {
 	body, err := json.Marshal(command)
 	if err != nil {
@@ -112,7 +106,6 @@ func (g *Ghasedak) SendSimpleSms(command interface{}) (string, error) {
 	}
 	return string(response), nil
 }
-
 func (g *Ghasedak) SendBulkSms(command interface{}) (string, error) {
 	body, err := json.Marshal(command)
 	if err != nil {
@@ -124,7 +117,6 @@ func (g *Ghasedak) SendBulkSms(command interface{}) (string, error) {
 	}
 	return string(response), nil
 }
-
 func (g *Ghasedak) SendPairToPairSms(command interface{}) (string, error) {
 	body, err := json.Marshal(command)
 	if err != nil {
@@ -136,19 +128,17 @@ func (g *Ghasedak) SendPairToPairSms(command interface{}) (string, error) {
 	}
 	return string(response), nil
 }
-
 func (g *Ghasedak) SendOtpSmsOld(command interface{}) (string, error) {
 	body, err := json.Marshal(command)
 	if err != nil {
 		return "", err
 	}
-	response, err := g.request("POST", "SendOtpSMSOld", body)
+	response, err := g.request("POST", "SendOtpWithParams", body)
 	if err != nil {
 		return "", err
 	}
 	return string(response), nil
 }
-
 func (g *Ghasedak) SendOtpSms(command interface{}) (string, error) {
 	body, err := json.Marshal(command)
 	if err != nil {

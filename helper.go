@@ -1,4 +1,4 @@
-package ghasedak
+package main
 
 import (
 	"net/url"
